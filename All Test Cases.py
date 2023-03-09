@@ -312,6 +312,51 @@ def test_faq():
         browser.quit()
 
 
+def test_contact_us():
+    try:
+        link = "https://tikitop.io/"
+        browser = webdriver.Chrome()
+        browser.implicitly_wait(5)
+        browser.get(link)
+
+        contact_us_tab = browser.find_elements(By.LINK_TEXT, "Contact Us")[1]
+        contact_us_tab.click()
+
+        contact_us_text = browser.find_element(
+            By.XPATH, "//h1[@class='ContactUsForm_title__F_181']")
+        contact_us_text_exp = "GET IN TOUCH"
+        contact_us_text_act = contact_us_text.text
+        assert contact_us_text_exp == contact_us_text_act, f"expected {contact_us_text_exp}, got {contact_us_text_act}"
+
+        first_name = browser.find_element(By.ID, 'name')
+        first_name.send_keys("TEST")
+        email = browser.find_element(By.ID, 'email')
+        email.send_keys("TEST@fexbox.org")
+        message = browser.find_element(By.ID, 'message')
+        message.send_keys("TEST TEST TEST TEST TEST TEST TEST")
+
+        send_message_button = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[@class='CustomButton_btn__22u2s CustomButton_colorRed__g7yY3']")))
+        send_message_button.click()
+
+        sent_message_popup = browser.find_element(
+            By.XPATH, "//h4[@class='ModalSuccess_title__EMOMJ']"
+        )
+        sent_message_text_exp = 'Your message has been sended'
+        sent_message_text_act = sent_message_popup.text
+        assert sent_message_text_exp == sent_message_text_act,\
+            f"expected {sent_message_text_exp}, got {sent_message_text_act}"
+        okay_button = browser.find_element(
+            By.XPATH, "//button[@class='CustomButton_btn__22u2s CustomButton_colorAqua__TKZR6 CustomButton_typeModalAsk__sQjdZ']"
+        )
+        okay_button.click()
+        assert contact_us_text_exp == contact_us_text_act, f"expected {contact_us_text_exp}, got {contact_us_text_act}"
+
+    finally:
+        browser.quit()
+
+
 def test_login_incorrect_password():
     try:
         link = "https://tikitop.io/"
