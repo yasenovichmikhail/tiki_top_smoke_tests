@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-def test_login_google_success():
+def test_login_email_success():
     try:
         link = "https://tikitop.io/"
         browser = webdriver.Chrome()
@@ -18,15 +18,12 @@ def test_login_google_success():
         signup_button_text_act = signup_button.text
         signup_button_text_exp = "Sign Up"
 
-        def signup(signup_button_text_act, signup_button_text_exp):
-            assert signup_button_text_act == signup_button_text_exp, f"expected {signup_button_text_exp}, got {signup_button_text_act}"
-
-        signup(signup_button_text_act, signup_button_text_exp)
+        assert signup_button_text_act == signup_button_text_exp, f"expected {signup_button_text_exp}, got {signup_button_text_act}"
         signup_button.click()
-        time.sleep(1)
 
-        login_tab = browser.find_element(
-            By.XPATH, "//div[@class='AuthorizationTypeItem_item__2IwVY'][2]")
+        login_tab = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[@class='AuthorizationTypeItem_item__2IwVY'][2]")))
 
         login_tab.click()
         input_email = browser.find_element(By.NAME, "email")
@@ -67,15 +64,12 @@ def test_open_profile():
         signup_button_text_act = signup_button.text
         signup_button_text_exp = "Sign Up"
 
-        def signup(signup_button_text_act, signup_button_text_exp):
-            assert signup_button_text_act == signup_button_text_exp, f"expected {signup_button_text_exp}, got {signup_button_text_act}"
-
-        signup(signup_button_text_act, signup_button_text_exp)
+        assert signup_button_text_act == signup_button_text_exp, f"expected {signup_button_text_exp}, got {signup_button_text_act}"
         signup_button.click()
-        time.sleep(1)
 
-        login_tab = browser.find_element(
-            By.XPATH, "//div[@class='AuthorizationTypeItem_item__2IwVY'][2]")
+        login_tab = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[@class='AuthorizationTypeItem_item__2IwVY'][2]")))
 
         login_tab.click()
         input_email = browser.find_element(By.NAME, "email")
