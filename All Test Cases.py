@@ -51,6 +51,73 @@ def test_login_email_success():
         browser.quit()
 
 
+def test_login_facebook_success():
+    try:
+        link = "https://tikitop.io/"
+        browser = webdriver.Chrome()
+        browser.implicitly_wait(5)
+        browser.get(link)
+
+        signup_button = browser.find_element(
+            By.XPATH,
+            "//button[@class='CustomButton_btn__22u2s CustomButton_colorWhite__MeJq0 CustomButton_btnSignUp__1ijqK']")
+        signup_button_text_act = signup_button.text
+        signup_button_text_exp = "Sign Up"
+
+        assert signup_button_text_act == signup_button_text_exp, \
+            f"expected {signup_button_text_exp}, got {signup_button_text_act}"
+
+        signup_button.click()
+
+        login_tab = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//div[@class='AuthorizationTypeItem_item__2IwVY'][2]")))
+        login_tab.click()
+
+        facebook_button = browser.find_element(
+            By.XPATH,
+            "//button[@class='AuthorizationServices_btnLogin__txbzD AuthorizationServices_iconFacebook__0Fg5_']")
+        facebook_button.click()
+
+        first_window = browser.window_handles[0]
+        new_window = browser.window_handles[1]
+        browser.switch_to.window(new_window)
+
+        facebook_input_email = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//input[@id='email']")))
+        facebook_input_email.send_keys("yasenovich.mikhail@mail.ru")
+
+        facebook_input_pass = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//input[@id='pass']")))
+        facebook_input_pass.send_keys("mnrvP888")
+
+        facebook_login_button = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//label[@id='loginbutton']")))
+        facebook_login_button.click()
+
+        browser.switch_to.window(first_window)
+
+        profile_button = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH,
+                 "//button[@class='CustomButton_btn__22u2s CustomButton_colorWhite__MeJq0 CustomButton_btnSignUp__1ijqK ButtonHeaderProfile_button__756EG']")))
+        profile_button.click()
+
+        my_profile_button = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable((By.XPATH, "//li[@class='ModalButtonProfile_item__FhMKh'][1]")))
+        my_profile_button.click()
+        facebook_profile_text = browser.find_element(By.XPATH, "//p[@class='UserProfile_email_header__70AZB']")
+        facebook_profile_text_exp = "Logged in with Facebook"
+        facebook_profile_text_act = facebook_profile_text.text
+        assert facebook_profile_text_act == facebook_profile_text_exp, \
+            f"expected {facebook_profile_text_exp}, got {facebook_profile_text_act}"
+    finally:
+        browser.quit()
+
+
 def test_open_profile():
     try:
         link = "https://tikitop.io/"
@@ -340,9 +407,9 @@ def test_contact_us():
                 (By.XPATH, "//button[@class='CustomButton_btn__22u2s CustomButton_colorRed__g7yY3']")))
         send_message_button.click()
 
-        sent_message_popup = browser.find_element(
-            By.XPATH, "//h4[@class='ModalSuccess_title__EMOMJ']"
-        )
+        sent_message_popup = WebDriverWait(browser, 5).until(
+            EC.element_to_be_clickable(
+                (By.XPATH, "//h4[@class='ModalSuccess_title__EMOMJ']")))
         sent_message_text_exp = 'Your message has been sended'
         sent_message_text_act = sent_message_popup.text
         assert sent_message_text_exp == sent_message_text_act,\
