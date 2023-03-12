@@ -27,7 +27,7 @@ def test_login_email_success():
 
         login_tab.click()
         input_email = browser.find_element(By.NAME, "email")
-        input_email.send_keys("bobbyngayer@gmail.com")
+        input_email.send_keys("alisson.ginter@gmail.com")
 
         input_password = browser.find_element(By.NAME, "password")
         input_password.send_keys("qwertyasd")
@@ -86,12 +86,12 @@ def test_login_facebook_success():
         facebook_input_email = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@id='email']")))
-        facebook_input_email.send_keys("yasenovich.mikhail@mail.ru")
+        facebook_input_email.send_keys("alisson.ginter@gmail.com")
 
         facebook_input_pass = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@id='pass']")))
-        facebook_input_pass.send_keys("mnrvP888")
+        facebook_input_pass.send_keys("qwertyasd")
 
         facebook_login_button = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
