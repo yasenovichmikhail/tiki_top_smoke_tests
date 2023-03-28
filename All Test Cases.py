@@ -44,8 +44,7 @@ def test_login_email_success():
         auth_text_act = auth_text.text
         auth_text_exp = "Profile"
 
-        def auth(auth_text_act, auth_text_exp):
-            assert auth_text_act == auth_text_exp, f"expected {auth_text_exp}, got {auth_text_act}"
+        assert auth_text_act == auth_text_exp, f"expected {auth_text_exp}, got {auth_text_act}"
 
     finally:
         browser.quit()
@@ -86,12 +85,12 @@ def test_login_facebook_success():
         facebook_input_email = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@id='email']")))
-        facebook_input_email.send_keys("alisson.ginter@gmail.com")
+        facebook_input_email.send_keys("yasenovich.mikhail@mail.ru")
 
         facebook_input_pass = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
                 (By.XPATH, "//input[@id='pass']")))
-        facebook_input_pass.send_keys("qwertyasd")
+        facebook_input_pass.send_keys("mnrvP888")
 
         facebook_login_button = WebDriverWait(browser, 5).until(
             EC.element_to_be_clickable(
@@ -150,17 +149,6 @@ def test_open_profile():
                 (By.XPATH,
                  "//button[@class='CustomButton_btn__22u2s CustomButton_colorAqua__TKZR6 CustomButton_typeAuth__m__ns']")))
         login_button.click()
-
-        auth_text = browser.find_element(
-            By.XPATH,
-            "//button[@class='CustomButton_btn__22u2s CustomButton_colorWhite__MeJq0 CustomButton_btnSignUp__1ijqK ButtonHeaderProfile_button__756EG']")
-        auth_text_act = auth_text.text
-        auth_text_exp = "Profile"
-
-        def auth(auth_text_act, auth_text_exp):
-            assert auth_text_act == auth_text_exp, f"expected {auth_text_exp}, got {auth_text_act}"
-
-        auth(auth_text_act, auth_text_exp)
 
         profile_button = browser.find_element(
             By.XPATH,
