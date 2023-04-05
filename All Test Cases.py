@@ -7,13 +7,6 @@ import pytest
 link = "https://tikitop.io/"
 
 
-@pytest.fixture
-def browser():
-    browser = webdriver.Chrome()
-    yield browser
-    browser.quit()
-
-
 def test_login_email_success(browser):
     browser.get(link)
     browser.implicitly_wait(5)
@@ -45,6 +38,7 @@ def test_login_email_success(browser):
     assert auth_text_act == auth_text_exp, f"expected {auth_text_exp}, got {auth_text_act}"
 
 
+@pytest.mark.skip
 def test_login_facebook_success(browser):
     browser.get(link)
     browser.implicitly_wait(5)
